@@ -56,7 +56,13 @@ enum operators
   STAR,
   MODULO,
   LS_THAN,
-  GR_THAN
+  GR_THAN,
+  LS_SHIFT,
+  RS_SHIFT,
+  BITWISE_AND,
+  BITWISE_OR,
+  BITWISE_XOR,
+  BITWISE_NOT
 };
 
 enum special_symbols

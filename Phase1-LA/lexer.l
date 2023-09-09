@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "symboltable.h"
-#include "tokens.h"wh
+#include "tokens.h"
 
 entry_t** symbol_table;
 entry_t** constant_table;
@@ -33,6 +33,7 @@ hex [0-9a-f]
 "if"                              {printf("\t%-30s : %3d\n",yytext,IF);}
 "else"                            {printf("\t%-30s : %3d\n",yytext,ELSE);}
 "return"                          {printf("\t%-30s : %3d\n",yytext,RETURN);}
+
 
 {identifier}                      {printf("\t%-30s : %3d\n", yytext,IDENTIFIER);
                                   insert( symbol_table,yytext,IDENTIFIER );}
@@ -94,13 +95,24 @@ hex [0-9a-f]
 "%"			                    {printf("\t%-30s : %3d\n",yytext,MODULO);}
 "<"			                    {printf("\t%-30s : %3d\n",yytext,LS_THAN);}
 ">"			                    {printf("\t%-30s : %3d\n",yytext,GR_THAN);}
+"<<"                            {printf("\t%-30s : %3d\n", yytext, LS_SHIFT);}
+">>"                            {printf("\t%-30s : %3d\n", yytext, RS_SHIFT);}
+"&"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_AND);}
+"|"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_OR);}
+"^"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_XOR);}
+"~"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_NOT);}
 .                               {printf("Line %3d: Illegal character %s\n",yylineno,yytext);}
 
 %%
 
+int yywrap()
+{
+    return 1;
+}
+
 int main()
 {
-  yyin=fopen("testcases/test-case-5.c","r");
+  yyin=fopen("t5.c","r");
   symbol_table=create_table();
   constant_table=create_table();
   yylex();
