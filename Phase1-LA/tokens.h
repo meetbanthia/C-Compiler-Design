@@ -8,6 +8,20 @@
 * Date        : 17-1-2018
 */
 
+/*
+1. Bitwise operators
+2. Ternary operator
+3. & operaroter pointers
+4. pointer dot
+5. sizeof operartor
+6. shorthand assignement opearators
+7. @ synbol
+
+
+
+Future : , operator for lists
+*/
+
 enum keywords
 {
   INT=100,
