@@ -20,14 +20,23 @@ The output should display appropriate tokens with their type and also the symbol
 #include<stdio.h>
 #include<stdlib.h>
 
+@
+Now i can use also for multi line comments
+@
+
 int main()
 {
+  int y;
+  int dot* =
   int x, y;
   long long int total, diff;
+
+  int result = (6 > 5) ? 6 : 4;
   int *ptr;
   unsigned int a = 0x0f;
   long int mylong = 123456l;
   long int i, j;
+  int checkbitwise = mylong>>1;
   for(i=0; i < 10; i++){
     for(j=10; j > 0; j--){
     printf("%d",i);
@@ -40,3 +49,12 @@ int main()
   int rem = x % y;
   printf ("Total = %d \n", total);
 }
+
+/*
+Will try nested multi line comments
+  /*
+
+  Hello this is nested multi line comments
+  */
+
+*/

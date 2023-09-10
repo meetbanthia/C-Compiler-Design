@@ -62,7 +62,10 @@ enum operators
   BITWISE_AND,
   BITWISE_OR,
   BITWISE_XOR,
-  BITWISE_NOT
+  BITWISE_NOT,
+  TERNARY_COND,
+  TERNARY_COLON,
+  ACCESS_DOT
 };
 
 enum special_symbols

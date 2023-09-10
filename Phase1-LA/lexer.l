@@ -7,12 +7,13 @@
 entry_t** symbol_table;
 entry_t** constant_table;
 int cmnt_strt = 0;
+int comment_level = 0;
 %}
 
 letter [a-zA-Z]
 digit [0-9]
 ws  [ \t\r\f\v]+
-identifier (_|{letter})({letter}|{digit}|_){0,31}
+identifier (_|{letter})(({letter}|{digit}|_){0,31})
 hex [0-9a-f]
 
  /* Exclusive states */
@@ -41,13 +42,17 @@ hex [0-9a-f]
 [+\-]?[0][x|X]{hex}+[lLuU]?        {printf("\t%-30s : %3d\n", yytext,HEX_CONSTANT);
 									insert( constant_table,yytext,HEX_CONSTANT);}
 [+\-]?{digit}+[lLuU]?              {printf("\t%-30s : %3d\n", yytext,DEC_CONSTANT);
+
 									insert( constant_table,yytext,DEC_CONSTANT);}
-"/*"                              {cmnt_strt = yylineno; BEGIN CMNT;}
+"*/"                                {printf("Line %3d:Comment never started!\n",yylineno);}
+"/*"                              {comment_level++; cmnt_strt = yylineno; BEGIN CMNT;}
 <CMNT>.|{ws}                      ;
 <CMNT>\n                          {yylineno++;}
-<CMNT>"*/"                        {BEGIN INITIAL;}
-<CMNT>"/*"                        {printf("Line %3d: Nested comments are not valid!\n",yylineno);}
+<CMNT>"*/"                        {comment_level--;if(comment_level==0)BEGIN INITIAL;}
+<CMNT>"/*"                        {comment_level++;}
 <CMNT><<EOF>>                     {printf("Line %3d: Unterminated comment\n", cmnt_strt); yyterminate();}
+
+
 ^"#include"                       {BEGIN PREPROC;}
 <PREPROC>"<"[^<>\n]+">"            {printf("\t%-30s : %3d\n",yytext,HEADER_FILE);}
 <PREPROC>{ws}                       ;
@@ -101,6 +106,9 @@ hex [0-9a-f]
 "|"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_OR);}
 "^"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_XOR);}
 "~"                             {printf("\t%-30s : %3d\n", yytext, BITWISE_NOT);}
+"?"                             {printf("\t%-30s : %3d\n", yytext, TERNARY_COND);}
+":"                             {printf("\t%-30s : %3d\n", yytext, TERNARY_COLON);}
+"."                             {printf("\t%-30s : %3d\n", yytext, ACCESS_DOT);}
 .                               {printf("Line %3d: Illegal character %s\n",yylineno,yytext);}
 
 %%
