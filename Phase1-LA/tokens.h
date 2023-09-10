@@ -9,10 +9,10 @@
 */
 
 /*
-1. Bitwise operators
-2. Ternary operator
+1. Bitwise operators done
+2. Ternary operator done
 3. & operaroter pointers
-4. pointer dot
+4. pointer dot done
 5. sizeof operartor
 6. shorthand assignement opearators
 7. @ synbol

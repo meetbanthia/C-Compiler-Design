@@ -26,6 +26,7 @@ Now i can use also for multi line comments
 
 int main()
 {
+  int letssee this;
   int y;
   int dot* =
   int x, y;
