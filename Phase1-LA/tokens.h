@@ -25,12 +25,14 @@ Future : , operator for lists
 enum keywords
 {
   INT=100,
+  FLOAT,
   LONG,
   LONG_LONG,
   SHORT,
   SIGNED,
   UNSIGNED,
   FOR,
+  WHILE,
   BREAK,
   CONTINUE,
   RETURN,
@@ -43,6 +45,8 @@ enum operators
 {
   DECREMENT=200,
   INCREMENT,
+  INCREMENT_ONE,
+  DECREMENT_ONE,
   PTR_SELECT,
   LOGICAL_AND,
   LOGICAL_OR,

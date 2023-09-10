@@ -26,12 +26,15 @@ hex [0-9a-f]
 
     // Rules for recognizing keywords 
 "int"                             { printf("\t%-30s : %3d\n", yytext, INT); }
+"float"                           { printf("\t%-30s : %3d\n",yytext,FLOAT);}
+"char"                            { printf("\t%-30s : %3d\n",yytext,CHAR);}
 "long"                            { printf("\t%-30s : %3d\n", yytext, LONG); }
 "long long"                       { printf("\t%-30s : %3d\n", yytext, LONG_LONG); }
 "short"                           { printf("\t%-30s : %3d\n", yytext, SHORT); }
 "signed"                          { printf("\t%-30s : %3d\n", yytext, SIGNED); }
 "unsigned"                        { printf("\t%-30s : %3d\n", yytext, UNSIGNED); }
 "for"                             { printf("\t%-30s : %3d\n", yytext, FOR); }
+"while"                           { printf("\t%-30s : %3d\n",yytext,WHILE);}
 "break"                           { printf("\t%-30s : %3d\n", yytext, BREAK); }
 "continue"                        { printf("\t%-30s : %3d\n", yytext, CONTINUE); }
 "if"                              { printf("\t%-30s : %3d\n", yytext, IF); }
@@ -60,14 +63,14 @@ hex [0-9a-f]
     /* Rules for recognizing comments */
 "*/"                              { printf("Line %3d: Comment never started!\n", yylineno); }
 "/*"                              { comment_level++; cmnt_strt = yylineno; BEGIN CMNT; }
-"/*"                              { comment_level++; cmnt_strt = yylineno; BEGIN CMNT; }
+"@"                              { comment_level++; cmnt_strt = yylineno; BEGIN CMNT; }
+<CMNT>"@"                         {comment_level=0;BEGIN INITIAL;}
 <CMNT>.|{ws}                      ;
 <CMNT>\n                          { yylineno++; }
 <CMNT>"*/"                        {
                                     comment_level--;
                                     if (comment_level == 0) BEGIN INITIAL;
                                   }
-<CMNT>"@"                         {comment_level=0;BEGIN INITIAL;}
 <CMNT>"/*"                        { comment_level++; }
 <CMNT><<EOF>>                     { printf("Line %3d: Unterminated comment\n", cmnt_strt); yyterminate(); }
 
@@ -96,8 +99,10 @@ hex [0-9a-f]
 \n                              { yylineno++; }
 
     /* Rules for recognizing operators and punctuation */
-"--"			                { printf("\t%-30s : %3d\n", yytext, DECREMENT); }
-"++"			                { printf("\t%-30s : %3d\n", yytext, INCREMENT); }
+"--"			                { printf("\t%-30s : %3d\n", yytext, DECREMENT_ONE); }
+"-="			                { printf("\t%-30s : %3d\n", yytext, DECREMENT); }
+"++"			                { printf("\t%-30s : %3d\n", yytext, INCREMENT_ONE); }
+"+="			                { printf("\t%-30s : %3d\n", yytext, INCREMENT); }
 "->"			                { printf("\t%-30s : %3d\n", yytext, PTR_SELECT); }
 "&&"			                { printf("\t%-30s : %3d\n", yytext, LOGICAL_AND); }
 "||"			                { printf("\t%-30s : %3d\n", yytext, LOGICAL_OR); }
