@@ -1,14 +1,5 @@
 %{
-#include <stdlib.h>
-#include <stdio.h>
-#include "symboltable.h"
-#include "tokens.h"
-
-// Define global variables
-entry_t** symbol_table;
-entry_t** constant_table;
-int cmnt_strt = 0;
-int comment_level = 0; // Keep track of comment nesting level
+#include "y.tab.h"
 %}
 
 /* Define regular expressions for tokens */
@@ -25,26 +16,26 @@ hex [0-9a-f]
 %%
 
     // Rules for recognizing keywords 
-"int"                             { printf("\t%-30s : %3d\n", yytext, INT); }
-"float"                           { printf("\t%-30s : %3d\n",yytext,FLOAT);}
-"char"                            { printf("\t%-30s : %3d\n",yytext,CHAR);}
-"long"                            { printf("\t%-30s : %3d\n", yytext, LONG); }
-"long long"                       { printf("\t%-30s : %3d\n", yytext, LONG_LONG); }
-"short"                           { printf("\t%-30s : %3d\n", yytext, SHORT); }
-"signed"                          { printf("\t%-30s : %3d\n", yytext, SIGNED); }
-"unsigned"                        { printf("\t%-30s : %3d\n", yytext, UNSIGNED); }
-"for"                             { printf("\t%-30s : %3d\n", yytext, FOR); }
-"while"                           { printf("\t%-30s : %3d\n",yytext,WHILE);}
-"break"                           { printf("\t%-30s : %3d\n", yytext, BREAK); }
-"continue"                        { printf("\t%-30s : %3d\n", yytext, CONTINUE); }
-"if"                              { printf("\t%-30s : %3d\n", yytext, IF); }
-"else"                            { printf("\t%-30s : %3d\n", yytext, ELSE); }
-"return"                          { printf("\t%-30s : %3d\n", yytext, RETURN); }
+"int"                             {return INT;}
+"float"                           {return FLOAT;}
+"char"                            {return CHAR;}
+"long"                            {return LONG;}
+"long long"                       {return LONG_LONG; }
+"short"                           {return SHORT; }
+"signed"                          {return SIGNED; }
+"unsigned"                        {return UNSIGNED; }
+"for"                             {return FOR; }
+"while"                           {return WHILE;}
+"break"                           {return BREAK; }
+"continue"                        {return CONTINUE; }
+"if"                              {return IF; }
+"else"                            {return ELSE; }
+"return"                          {return RETURN; }
 
     /* Rule for recognizing identifiers */
 {identifier}                      {
-                                    printf("\t%-30s : %3d\n", yytext, IDENTIFIER);
                                     insert(symbol_table, yytext, IDENTIFIER);
+                                    return IDENTIFIER;
                                   }
 
     /* Rule for recognizing whitespace */
@@ -52,12 +43,12 @@ hex [0-9a-f]
 
     /* Rules for recognizing constants */
 [+\-]?[0][xX]{hex}+[lLuU]?        {
-                                    printf("\t%-30s : %3d\n", yytext, HEX_CONSTANT);
                                     insert(constant_table, yytext, HEX_CONSTANT);
+                                    return HEX_CONSTANT;
                                   }
 [+\-]?{digit}+[lLuU]?              {
-                                    printf("\t%-30s : %3d\n", yytext, DEC_CONSTANT);
                                     insert(constant_table, yytext, DEC_CONSTANT);
+                                    return DEC_CONSTANT;
                                   }
 
     /* Rules for recognizing comments */
@@ -90,8 +81,10 @@ hex [0-9a-f]
                         yyless(yyleng - 1);       /* push the quote back if it was escaped */
                         yymore();
                     }
-                    else
+                    else{
                         insert(constant_table, yytext, STRING);
+                        return STRING;
+                    }
                  }
 
 \"[^\"\n]*$                     { printf("Line %3d: Unterminated string %s\n", yylineno, yytext); }
@@ -99,43 +92,43 @@ hex [0-9a-f]
 \n                              { yylineno++; }
 
     /* Rules for recognizing operators and punctuation */
-"--"			                { printf("\t%-30s : %3d\n", yytext, DECREMENT_ONE); }
-"-="			                { printf("\t%-30s : %3d\n", yytext, DECREMENT); }
-"++"			                { printf("\t%-30s : %3d\n", yytext, INCREMENT_ONE); }
-"+="			                { printf("\t%-30s : %3d\n", yytext, INCREMENT); }
-"->"			                { printf("\t%-30s : %3d\n", yytext, PTR_SELECT); }
-"&&"			                { printf("\t%-30s : %3d\n", yytext, LOGICAL_AND); }
-"||"			                { printf("\t%-30s : %3d\n", yytext, LOGICAL_OR); }
-"<="			                { printf("\t%-30s : %3d\n", yytext, LS_THAN_EQ); }
-">="			                { printf("\t%-30s : %3d\n", yytext, GR_THAN_EQ); }
-"=="			                { printf("\t%-30s : %3d\n", yytext, EQ); }
-"!="		                    { printf("\t%-30s : %3d\n", yytext, NOT_EQ); }
-";"			                    { printf("\t%-30s : %3d\n", yytext, DELIMITER); }
-"{"                             { printf("\t%-30s : %3d\n", yytext, OPEN_BRACES); }
-"}"                             { printf("\t%-30s : %3d\n", yytext, CLOSE_BRACES); }
-","			                    { printf("\t%-30s : %3d\n", yytext, COMMA); }
-"="			                    { printf("\t%-30s : %3d\n", yytext, ASSIGN); }
-"("			                    { printf("\t%-30s : %3d\n", yytext, OPEN_PAR); }
-")"			                    { printf("\t%-30s : %3d\n", yytext, CLOSE_PAR); }
-"["                             { printf("\t%-30s : %3d\n", yytext, OPEN_SQ_BRKT); }
-"]"                             { printf("\t%-30s : %3d\n", yytext, CLOSE_SQ_BRKT); }
-"-"			                    { printf("\t%-30s : %3d\n", yytext, MINUS); }
-"+"			                    { printf("\t%-30s : %3d\n", yytext, PLUS); }
-"*"			                    { printf("\t%-30s : %3d\n", yytext, STAR); }
-"/"		                        { printf("\t%-30s : %3d\n", yytext, FW_SLASH); }
-"%"			                    { printf("\t%-30s : %3d\n", yytext, MODULO); }
-"<"			                    { printf("\t%-30s : %3d\n", yytext, LS_THAN); }
-">"			                    { printf("\t%-30s : %3d\n", yytext, GR_THAN); }
-"<<"                            { printf("\t%-30s : %3d\n", yytext, LS_SHIFT); }
-">>"                            { printf("\t%-30s : %3d\n", yytext, RS_SHIFT); }
-"&"                             { printf("\t%-30s : %3d\n", yytext, BITWISE_AND); }
-"|"                             { printf("\t%-30s : %3d\n", yytext, BITWISE_OR); }
-"^"                             { printf("\t%-30s : %3d\n", yytext, BITWISE_XOR); }
-"~"                             { printf("\t%-30s : %3d\n", yytext, BITWISE_NOT); }
-"?"                             { printf("\t%-30s : %3d\n", yytext, TERNARY_COND); }
-":"                             { printf("\t%-30s : %3d\n", yytext, TERNARY_COLON); }
-"."                             { printf("\t%-30s : %3d\n", yytext, ACCESS_DOT); }
-.                               { printf("Line %3d: Illegal character %s\n", yylineno, yytext); }
+"--"			                {return DECREMENT_ONE; }
+"-="			                {return DECREMENT; }
+"++"			                {return INCREMENT_ONE; }
+"+="			                {return INCREMENT; }
+"->"			                {return PTR_SELECT; }
+"&&"			                {return LOGICAL_AND; }
+"||"			                {return LOGICAL_OR; }
+"<="			                {return LS_THAN_EQ; }
+">="			                {return GR_THAN_EQ; }
+"=="			                {return EQ; }
+"!="		                    {return NOT_EQ; }
+";"			                    {return DELIMITER; }
+"{"                             {return OPEN_BRACES; }
+"}"                             {return CLOSE_BRACES; }
+","			                    {return COMMA; }
+"="			                    {return ASSIGN; }
+"("			                    {return OPEN_PAR; }
+")"			                    {return CLOSE_PAR; }
+"["                             {return OPEN_SQ_BRKT; }
+"]"                             {return CLOSE_SQ_BRKT; }
+"-"			                    {return MINUS; }
+"+"			                    {return PLUS; }
+"*"			                    {return STAR; }
+"/"		                        {return FW_SLASH; }
+"%"			                    {return MODULO; }
+"<"			                    {return LS_THAN; }
+">"			                    {return GR_THAN; }
+"<<"                            {return LS_SHIFT; }
+">>"                            {return RS_SHIFT; }
+"&"                             {return BITWISE_AND; }
+"|"                             {return BITWISE_OR; }
+"^"                             {return BITWISE_XOR; }
+"~"                             {return BITWISE_NOT; }
+"?"                             {return TERNARY_COND; }
+":"                             {return TERNARY_COLON; }
+"."                             {return ACCESS_DOT; }
+.                               {return yytext[0];}
 
 %%
 
