@@ -15,6 +15,8 @@ hex [0-9a-f]
 
 %%
 
+<<EOF>>                           {return EOF;}
+
     // Rules for recognizing keywords 
 "int"                             {return INT;}
 "float"                           {return FLOAT;}
