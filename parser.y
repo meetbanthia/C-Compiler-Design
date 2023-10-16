@@ -91,8 +91,6 @@ expression : OPEN_PAR expression CLOSE_PAR
 | constant
 | IDENTIFIER
 
-block : OPEN_BRACES body CLOSE_BRACES | single_stat
-
 body : single_stat body
 |
 single_stat : declaration

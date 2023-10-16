@@ -11,6 +11,9 @@ int cmnt_strt = 0;
 int comment_level = 0; // Keep track of comment nesting level
 
 int flag=1;
+
+void yyerror(char* msg){}
+int yylex();
 %}
 
 %token INT FLOAT CHAR LONG LONG_LONG SHORT SIGNED UNSIGNED
@@ -83,8 +86,6 @@ INITIALIZE : ASSIGN EXP
 MULTI_VAR : COMMA IDENTIFIER INITIALIZE MULTI_VAR 
 |
 
-EXP : 
-
 ifblock : IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
 | IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
 
@@ -126,3 +127,29 @@ pt : STAR pt
 sc : DELIMITER sc
 | DELIMITER
 %%
+
+int main(int argc, char *argv[])
+{
+	symbol_table = create_table();
+	constant_table = create_table();
+
+	yyin = fopen(argv[1], "r");
+
+	if(!yyparse())
+	{
+		printf("\nParsing complete\n");
+	}
+	else
+	{
+			printf("\nParsing failed\n");
+	}
+
+
+	printf("\n\tSymbol table");
+	display(symbol_table);
+
+
+	fclose(yyin);
+	return 0;
+}
+

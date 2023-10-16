@@ -47,54 +47,55 @@
      SHORT = 263,
      SIGNED = 264,
      UNSIGNED = 265,
-     FOR = 266,
-     WHILE = 267,
-     BREAK = 268,
-     CONTINUE = 269,
-     IF = 270,
-     ELSE = 271,
-     RETURN = 272,
-     IDENTIFIER = 273,
-     HEX_CONSTANT = 274,
-     DEC_CONSTANT = 275,
-     STRING = 276,
-     DECREMENT_ONE = 277,
-     DECREMENT = 278,
-     INCREMENT_ONE = 279,
-     INCREMENT = 280,
-     PTR_SELECT = 281,
-     LOGICAL_AND = 282,
-     LOGICAL_OR = 283,
-     LS_THAN_EQ = 284,
-     GR_THAN_EQ = 285,
-     EQ = 286,
-     NOT_EQ = 287,
-     LS_THAN = 288,
-     GR_THAN = 289,
-     DELIMITER = 290,
-     OPEN_BRACES = 291,
-     CLOSE_BRACES = 292,
-     COMMA = 293,
-     ASSIGN = 294,
-     OPEN_PAR = 295,
-     CLOSE_PAR = 296,
-     OPEN_SQ_BRKT = 297,
-     CLOSE_SQ_BRKT = 298,
-     MINUS = 299,
-     PLUS = 300,
-     STAR = 301,
-     FW_SLASH = 302,
-     MODULO = 303,
-     LS_SHIFT = 304,
-     RS_SHIFT = 305,
-     BITWISE_AND = 306,
-     BITWISE_OR = 307,
-     BITWISE_XOR = 308,
-     BITWISE_NOT = 309,
-     TERNARY_COND = 310,
-     TERNARY_COLON = 311,
-     ACCESS_DOT = 312,
-     EOF = 313
+     VOID = 266,
+     FOR = 267,
+     WHILE = 268,
+     BREAK = 269,
+     CONTINUE = 270,
+     IF = 271,
+     ELSE = 272,
+     RETURN = 273,
+     IDENTIFIER = 274,
+     HEX_CONSTANT = 275,
+     DEC_CONSTANT = 276,
+     STRING = 277,
+     DECREMENT_ONE = 278,
+     DECREMENT = 279,
+     INCREMENT_ONE = 280,
+     INCREMENT = 281,
+     PTR_SELECT = 282,
+     LOGICAL_AND = 283,
+     LOGICAL_OR = 284,
+     LS_THAN_EQ = 285,
+     GR_THAN_EQ = 286,
+     EQ = 287,
+     NOT_EQ = 288,
+     LS_THAN = 289,
+     GR_THAN = 290,
+     DELIMITER = 291,
+     OPEN_BRACES = 292,
+     CLOSE_BRACES = 293,
+     COMMA = 294,
+     ASSIGN = 295,
+     OPEN_PAR = 296,
+     CLOSE_PAR = 297,
+     OPEN_SQ_BRKT = 298,
+     CLOSE_SQ_BRKT = 299,
+     MINUS = 300,
+     PLUS = 301,
+     STAR = 302,
+     FW_SLASH = 303,
+     MODULO = 304,
+     LS_SHIFT = 305,
+     RS_SHIFT = 306,
+     BITWISE_AND = 307,
+     BITWISE_OR = 308,
+     BITWISE_XOR = 309,
+     BITWISE_NOT = 310,
+     TERNARY_COND = 311,
+     TERNARY_COLON = 312,
+     ACCESS_DOT = 313,
+     UNARY = 314
    };
 #endif
 /* Tokens.  */
@@ -106,54 +107,55 @@
 #define SHORT 263
 #define SIGNED 264
 #define UNSIGNED 265
-#define FOR 266
-#define WHILE 267
-#define BREAK 268
-#define CONTINUE 269
-#define IF 270
-#define ELSE 271
-#define RETURN 272
-#define IDENTIFIER 273
-#define HEX_CONSTANT 274
-#define DEC_CONSTANT 275
-#define STRING 276
-#define DECREMENT_ONE 277
-#define DECREMENT 278
-#define INCREMENT_ONE 279
-#define INCREMENT 280
-#define PTR_SELECT 281
-#define LOGICAL_AND 282
-#define LOGICAL_OR 283
-#define LS_THAN_EQ 284
-#define GR_THAN_EQ 285
-#define EQ 286
-#define NOT_EQ 287
-#define LS_THAN 288
-#define GR_THAN 289
-#define DELIMITER 290
-#define OPEN_BRACES 291
-#define CLOSE_BRACES 292
-#define COMMA 293
-#define ASSIGN 294
-#define OPEN_PAR 295
-#define CLOSE_PAR 296
-#define OPEN_SQ_BRKT 297
-#define CLOSE_SQ_BRKT 298
-#define MINUS 299
-#define PLUS 300
-#define STAR 301
-#define FW_SLASH 302
-#define MODULO 303
-#define LS_SHIFT 304
-#define RS_SHIFT 305
-#define BITWISE_AND 306
-#define BITWISE_OR 307
-#define BITWISE_XOR 308
-#define BITWISE_NOT 309
-#define TERNARY_COND 310
-#define TERNARY_COLON 311
-#define ACCESS_DOT 312
-#define EOF 313
+#define VOID 266
+#define FOR 267
+#define WHILE 268
+#define BREAK 269
+#define CONTINUE 270
+#define IF 271
+#define ELSE 272
+#define RETURN 273
+#define IDENTIFIER 274
+#define HEX_CONSTANT 275
+#define DEC_CONSTANT 276
+#define STRING 277
+#define DECREMENT_ONE 278
+#define DECREMENT 279
+#define INCREMENT_ONE 280
+#define INCREMENT 281
+#define PTR_SELECT 282
+#define LOGICAL_AND 283
+#define LOGICAL_OR 284
+#define LS_THAN_EQ 285
+#define GR_THAN_EQ 286
+#define EQ 287
+#define NOT_EQ 288
+#define LS_THAN 289
+#define GR_THAN 290
+#define DELIMITER 291
+#define OPEN_BRACES 292
+#define CLOSE_BRACES 293
+#define COMMA 294
+#define ASSIGN 295
+#define OPEN_PAR 296
+#define CLOSE_PAR 297
+#define OPEN_SQ_BRKT 298
+#define CLOSE_SQ_BRKT 299
+#define MINUS 300
+#define PLUS 301
+#define STAR 302
+#define FW_SLASH 303
+#define MODULO 304
+#define LS_SHIFT 305
+#define RS_SHIFT 306
+#define BITWISE_AND 307
+#define BITWISE_OR 308
+#define BITWISE_XOR 309
+#define BITWISE_NOT 310
+#define TERNARY_COND 311
+#define TERNARY_COLON 312
+#define ACCESS_DOT 313
+#define UNARY 314
 
 
 

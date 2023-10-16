@@ -1,7 +1,9 @@
 //HELLO!!😀
 #include <stdio.h>
 
-void hello();;;;;;
+void hello(){
+	return;
+}
 
 int a=3,b;
 
@@ -9,9 +11,11 @@ int a=3,b;
 int main(void)
 //logic
 {
-return;
+int a = "hello" + 6;
 	if(3);;;;;
-int a = 3>b;
 //congrats!! code succeeded
+int i =9;
+for(2>3;7;i>9)
 return 0;
+
 }

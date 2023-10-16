@@ -16,6 +16,7 @@ hex [0-9a-f]
 %%
 
   /* Rules for recognizing keywords */
+"void"                            {return VOID;}
 "int"                             {return INT;}
 "float"                           {return FLOAT;}
 "char"                            {return CHAR;}
@@ -64,12 +65,12 @@ hex [0-9a-f]
                                   }
 <CMNT>"/*"                        { comment_level++; }
 <CMNT><<EOF>>                     { printf("Line %3d: Unterminated comment\n", cmnt_strt); yyterminate(); }
-<<EOF>>                           {return EOF;}
+    
     /* Rules for recognizing preprocessor directives */
 ^"#include"                       { BEGIN PREPROC; }
-<PREPROC>"<"[^<>\n]+">"            { printf("\t%-30s : %3d\n", yytext, HEADER_FILE); }
+<PREPROC>"<"[^<>\n]+">"           ;
 <PREPROC>{ws}                     ;
-<PREPROC>\"[^"\n]+\"              { printf("\t%-30s : %3d\n", yytext, HEADER_FILE); }
+<PREPROC>\"[^"\n]+\"              ;
 <PREPROC>\n                       { yylineno++; BEGIN INITIAL; }
 <PREPROC>.                        { printf("Line %3d: Illegal header file format\n", yylineno); }
 "//".*                            ;
@@ -136,20 +137,4 @@ hex [0-9a-f]
 int yywrap()
 {
     return 1;
-}
-
-int main()
-{
-    yyin = fopen("t2.c", "r");
-    symbol_table = create_table();
-    constant_table = create_table();
-    yylex();
-    
-    // Display symbol and constant tables
-    printf("\n\tSymbol table\n");
-    display(symbol_table);
-    printf("\n\tConstants Table\n");
-    display(constant_table);
-    
-    printf("NOTE: Please refer tokens.h for token meanings\n");
 }
