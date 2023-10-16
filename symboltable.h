@@ -25,6 +25,8 @@ struct entry_s
 {
 	char* lexeme; 
 	int token_name;
+	//datatype ref;
+	//int linno.
 	struct entry_s* successor;
 };
 

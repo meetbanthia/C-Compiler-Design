@@ -147,7 +147,7 @@ int yywrap()
 
 int main()
 {
-    yyin = fopen("t5.c", "r");
+    yyin = fopen("t2.c", "r");
     symbol_table = create_table();
     constant_table = create_table();
     yylex();

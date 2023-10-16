@@ -1,11 +1,4 @@
-/* 
-Karthik M - 15CO221
-Kaushik S Kalmady - 15CO222
-Compiler Design Project 1
-
-Test Case 5
-
-Identifying tokens and displaying symbol and constants table
+/*
 
 Following tokens must be detected
  - Keywords   (int, long int, long long int, main include)
