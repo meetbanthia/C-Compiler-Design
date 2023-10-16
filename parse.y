@@ -40,13 +40,65 @@ int flag=1;
 %token EOF 
 
 %%
+code : STRUCTURE code
+| 
 
-code : file EOF
-file : body
+/* Global Variable is left */
+STRUCTURE : DECL
+| FUNC 
+| FUN_DECL
 
-functions : type IDENTIFIER OPEN_PAR arg CLOSE_PAR block
-arg : type IDENTIFIER COMMA arg 
-| type IDENTIFIER
+FUN_DECL : type IDENTIFIER OPEN_PAR ARG CLOSE_PAR sc
+
+FUNC : type IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
+ARG : type IDENTIFIER arg 
+|
+arg : COMMA type IDENTIFIER arg
+|
+
+BODY : stmt BODY
+|
+
+LOOPBODY : X LOOPBODY
+|
+X : stmt
+| BREAK sc
+| CONTINUE sc
+
+stmt : DECL
+| ifblock
+| forblock
+| whileblock
+| functioncall
+| EXP
+| return_stm
+
+DECL : TYPE IDENTIFIER INITIALIZE MULTI_VAR sc
+TYPE : type 
+|
+CONST : DEC_CONSTANT | HEX_CONSTANT
+
+INITIALIZE : ASSIGN EXP
+|
+MULTI_VAR : COMMA IDENTIFIER INITIALIZE MULTI_VAR 
+|
+
+EXP : 
+
+ifblock : IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
+| IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
+
+whileblock : WHILE OPEN_PAR EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
+
+forblock : FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
+
+functioncall : IDENTIFIER OPEN_PAR temp CLOSE_PAR
+temp : EXP temp
+|
+
+return_stm : RETURN EXP sc
+| RETURN sc
+| RETURN functioncall
 
 RLOP : LS_THAN_EQ 
 |GR_THAN_EQ 
@@ -57,52 +109,11 @@ RLOP : LS_THAN_EQ
 LGOP : LOGICAL_AND
 |LOGICAL_OR
 
-statement : ifblock
-| forblock
-| whileblock
-| functioncall
-| expression
-| return_stm
-| cont_stm
-| break_stmt
-
-ifblock : IF OPEN_PAR expression CLOSE_PAR block ELSE block
-| IF OPEN_PAR expression CLOSE_PAR block
-
-whileblock : WHILE OPEN_PAR expression CLOSE_PAR block
-
-forblock : FOR OPEN_PAR expression DELIMITER expression DELIMITER expression CLOSE_PAR block
-
-functioncall : IDENTIFIER OPEN_PAR temp CLOSE_PAR
-temp : expression temp
-|
-
-return_stm : RETURN expression sc
-| RETURN sc
-
-break_stmt : BREAK sc
-cont_stm : CONTINUE sc
-
-constant : DEC_CONSTANT | HEX_CONSTANT
-
-expression : OPEN_PAR expression CLOSE_PAR
-| expression RLOP expression
-| expression LGOP expression
-| constant
+EXP : OPEN_PAR EXP CLOSE_PAR
+| EXP RLOP EXP
+| EXP LGOP EXP
+| CONST
 | IDENTIFIER
-
-block : OPEN_BRACES body CLOSE_BRACES | single_stat
-
-body : single_stat body
-|
-single_stat : declaration
-| statement
-|
-
-declaration : type IDENTIFIER A sc
-
-A : COMMA IDENTIFIER A 
-|
 
 type : sign dt pt
 sign : SIGNED
@@ -114,13 +125,4 @@ pt : STAR pt
 
 sc : DELIMITER sc
 | DELIMITER
- 
-
-
-
-
-
-
-
-
 %%

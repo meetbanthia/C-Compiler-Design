@@ -15,9 +15,7 @@ hex [0-9a-f]
 
 %%
 
-<<EOF>>                           {return EOF;}
-
-    // Rules for recognizing keywords 
+  /* Rules for recognizing keywords */
 "int"                             {return INT;}
 "float"                           {return FLOAT;}
 "char"                            {return CHAR;}
@@ -66,7 +64,7 @@ hex [0-9a-f]
                                   }
 <CMNT>"/*"                        { comment_level++; }
 <CMNT><<EOF>>                     { printf("Line %3d: Unterminated comment\n", cmnt_strt); yyterminate(); }
-
+<<EOF>>                           {return EOF;}
     /* Rules for recognizing preprocessor directives */
 ^"#include"                       { BEGIN PREPROC; }
 <PREPROC>"<"[^<>\n]+">"            { printf("\t%-30s : %3d\n", yytext, HEADER_FILE); }
