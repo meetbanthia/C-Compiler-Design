@@ -54,14 +54,25 @@ code: STRUCTURE code
     |
     ;
 
-STRUCTURE: DECL
-         | FUNC
-         | FUN_DECL
+STRUCTURE: GLODECL     {printf("Choosing Global Declaration\n");}
+         | FUNC     {printf("Choosing Function\n");}
+         | FUN_DECL {printf("Choosing Function Declaration\n");}
          ;
+
+GLODECL : type IDENTIFIER INI_CONST GLO_LIST sc
+
+INI_CONST : ASSIGN CONST
+          |
+          ;
+
+GLO_LIST: COMMA type IDENTIFIER INI_CONST GLO_LIST
+        |
+        ;
 
 FUN_DECL: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR sc
         | VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR sc
         ;
+
 
 FUNC: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
     | VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
@@ -95,6 +106,7 @@ stmt: DECL
     | functioncall
     | EXP
     | return_stm
+    | sc
     ;
 
 ifblock : IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
@@ -116,7 +128,7 @@ temp: EXP
 
 return_stm: RETURN EXP sc
           | RETURN sc
-          | RETURN functioncall
+          | RETURN functioncall sc
           ;
 
 DECL: TYPE IDENTIFIER INITIALIZE VAR_LIST sc
