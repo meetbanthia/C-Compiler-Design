@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include "symboltable.h"
+/* #include "tokens.h" */
 
 // Define global variables
 entry_t** symbol_table;
@@ -70,6 +71,7 @@ ARG : type IDENTIFIER arg
     | VOID 
     |
     ;
+
 arg : COMMA type IDENTIFIER arg
     |
     ;
@@ -120,7 +122,7 @@ return_stm: RETURN EXP sc
 DECL: TYPE IDENTIFIER INITIALIZE VAR_LIST sc
     ;
 
-VAR_LIST: COMMA IDENTIFIER INITIALIZE VAR_LIST
+VAR_LIST: COMMA TYPE IDENTIFIER INITIALIZE VAR_LIST
         |
         ;
 

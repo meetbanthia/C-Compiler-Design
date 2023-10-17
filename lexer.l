@@ -16,25 +16,26 @@ hex [0-9a-f]
 %%
 
   /* Rules for recognizing keywords */
-"void"                            {return VOID;}
-"int"                             {return INT;}
-"float"                           {return FLOAT;}
-"char"                            {return CHAR;}
-"long"                            {return LONG;}
-"long long"                       {return LONG_LONG; }
-"short"                           {return SHORT; }
-"signed"                          {return SIGNED; }
-"unsigned"                        {return UNSIGNED; }
-"for"                             {return FOR; }
-"while"                           {return WHILE;}
-"break"                           {return BREAK; }
-"continue"                        {return CONTINUE; }
-"if"                              {return IF; }
-"else"                            {return ELSE; }
-"return"                          {return RETURN; }
+"void"                            {printf("%s",yytext);return VOID;}
+"int"                             {printf("%s",yytext);return INT;}
+"float"                           {printf("%s",yytext);return FLOAT;}
+"char"                            {printf("%s",yytext);return CHAR;}
+"long"                            {printf("%s",yytext);return LONG;}
+"long long"                       {printf("%s",yytext);return LONG_LONG; }
+"short"                           {printf("%s",yytext);return SHORT; }
+"signed"                          {printf("%s",yytext);return SIGNED; }
+"unsigned"                        {printf("%s",yytext);return UNSIGNED; }
+"for"                             {printf("%s",yytext);return FOR; }
+"while"                           {printf("%s",yytext);return WHILE;}
+"break"                           {printf("%s",yytext);return BREAK; }
+"continue"                        {printf("%s",yytext);return CONTINUE; }
+"if"                              {printf("%s",yytext);return IF; }
+"else"                            {printf("%s",yytext);return ELSE; }
+"return"                          {printf("%s",yytext);return RETURN; }
 
     /* Rule for recognizing identifiers */
 {identifier}                      {
+                                    printf("%s",yytext);
                                     insert(symbol_table, yytext, IDENTIFIER);
                                     return IDENTIFIER;
                                   }
@@ -44,10 +45,12 @@ hex [0-9a-f]
 
     /* Rules for recognizing constants */
 [+\-]?[0][xX]{hex}+[lLuU]?        {
+                                    printf("%s",yytext);
                                     insert(constant_table, yytext, HEX_CONSTANT);
                                     return HEX_CONSTANT;
                                   }
 [+\-]?{digit}+[lLuU]?              {
+                                    printf("%s",yytext);
                                     insert(constant_table, yytext, DEC_CONSTANT);
                                     return DEC_CONSTANT;
                                   }
@@ -83,6 +86,7 @@ hex [0-9a-f]
                         yymore();
                     }
                     else{
+                        printf("%s",yytext);
                         insert(constant_table, yytext, STRING);
                         return STRING;
                     }
@@ -93,43 +97,43 @@ hex [0-9a-f]
 \n                              { yylineno++; }
 
     /* Rules for recognizing operators and punctuation */
-"--"			                {return DECREMENT_ONE; }
-"-="			                {return DECREMENT; }
-"++"			                {return INCREMENT_ONE; }
-"+="			                {return INCREMENT; }
-"->"			                {return PTR_SELECT; }
-"&&"			                {return LOGICAL_AND; }
-"||"			                {return LOGICAL_OR; }
-"<="			                {return LS_THAN_EQ; }
-">="			                {return GR_THAN_EQ; }
-"=="			                {return EQ; }
-"!="		                    {return NOT_EQ; }
-";"			                    {return DELIMITER; }
-"{"                             {return OPEN_BRACES; }
-"}"                             {return CLOSE_BRACES; }
-","			                    {return COMMA; }
-"="			                    {return ASSIGN; }
-"("			                    {return OPEN_PAR; }
-")"			                    {return CLOSE_PAR; }
-"["                             {return OPEN_SQ_BRKT; }
-"]"                             {return CLOSE_SQ_BRKT; }
-"-"			                    {return MINUS; }
-"+"			                    {return PLUS; }
-"*"			                    {return STAR; }
-"/"		                        {return FW_SLASH; }
-"%"			                    {return MODULO; }
-"<"			                    {return LS_THAN; }
-">"			                    {return GR_THAN; }
-"<<"                            {return LS_SHIFT; }
-">>"                            {return RS_SHIFT; }
-"&"                             {return BITWISE_AND; }
-"|"                             {return BITWISE_OR; }
-"^"                             {return BITWISE_XOR; }
-"~"                             {return BITWISE_NOT; }
-"?"                             {return TERNARY_COND; }
-":"                             {return TERNARY_COLON; }
-"."                             {return ACCESS_DOT; }
-.                               {return yytext[0];}
+"--"			                {printf("%s",yytext);return DECREMENT_ONE; }
+"-="			                {printf("%s",yytext);return DECREMENT; }
+"++"			                {printf("%s",yytext);return INCREMENT_ONE; }
+"+="			                {printf("%s",yytext);return INCREMENT; }
+"->"			                {printf("%s",yytext);return PTR_SELECT; }
+"&&"			                {printf("%s",yytext);return LOGICAL_AND; }
+"||"			                {printf("%s",yytext);return LOGICAL_OR; }
+"<="			                {printf("%s",yytext);return LS_THAN_EQ; }
+">="			                {printf("%s",yytext);return GR_THAN_EQ; }
+"=="			                {printf("%s",yytext);return EQ; }
+"!="		                    {printf("%s",yytext);return NOT_EQ; }
+";"			                    {printf("%s",yytext);return DELIMITER; }
+"{"                             {printf("%s",yytext);return OPEN_BRACES; }
+"}"                             {printf("%s",yytext);return CLOSE_BRACES; }
+","			                    {printf("%s",yytext);return COMMA; }
+"="			                    {printf("%s",yytext);return ASSIGN; }
+"("			                    {printf("%s",yytext);return OPEN_PAR; }
+")"			                    {printf("%s",yytext);return CLOSE_PAR; }
+"["                             {printf("%s",yytext);return OPEN_SQ_BRKT; }
+"]"                             {printf("%s",yytext);return CLOSE_SQ_BRKT; }
+"-"			                    {printf("%s",yytext);return MINUS; }
+"+"			                    {printf("%s",yytext);return PLUS; }
+"*"			                    {printf("%s",yytext);return STAR; }
+"/"		                        {printf("%s",yytext);return FW_SLASH; }
+"%"			                    {printf("%s",yytext);return MODULO; }
+"<"			                    {printf("%s",yytext);return LS_THAN; }
+">"			                    {printf("%s",yytext);return GR_THAN; }
+"<<"                            {printf("%s",yytext);return LS_SHIFT; }
+">>"                            {printf("%s",yytext);return RS_SHIFT; }
+"&"                             {printf("%s",yytext);return BITWISE_AND; }
+"|"                             {printf("%s",yytext);return BITWISE_OR; }
+"^"                             {printf("%s",yytext);return BITWISE_XOR; }
+"~"                             {printf("%s",yytext);return BITWISE_NOT; }
+"?"                             {printf("%s",yytext);return TERNARY_COND; }
+":"                             {printf("%s",yytext);return TERNARY_COLON; }
+"."                             {printf("%s",yytext);return ACCESS_DOT; }
+.                               {printf("%s",yytext);return yytext[0];}
 
 %%
 

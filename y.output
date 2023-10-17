@@ -15,17 +15,17 @@ Terminals which are not used
 
 
 State 10 conflicts: 1 shift/reduce
-State 71 conflicts: 1 shift/reduce
-State 86 conflicts: 18 shift/reduce
+State 72 conflicts: 1 shift/reduce
 State 87 conflicts: 18 shift/reduce
-State 90 conflicts: 1 shift/reduce
-State 96 conflicts: 1 shift/reduce
-State 98 conflicts: 1 shift/reduce
-State 134 conflicts: 1 shift/reduce
+State 88 conflicts: 18 shift/reduce
+State 91 conflicts: 1 shift/reduce
+State 97 conflicts: 1 shift/reduce
+State 99 conflicts: 1 shift/reduce
 State 135 conflicts: 1 shift/reduce
-State 141 conflicts: 1 shift/reduce
-State 152 conflicts: 1 shift/reduce
+State 136 conflicts: 1 shift/reduce
+State 142 conflicts: 1 shift/reduce
 State 153 conflicts: 1 shift/reduce
+State 154 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -88,7 +88,7 @@ Grammar
 
    39 DECL: TYPE IDENTIFIER INITIALIZE VAR_LIST sc
 
-   40 VAR_LIST: COMMA IDENTIFIER INITIALIZE VAR_LIST
+   40 VAR_LIST: COMMA TYPE IDENTIFIER INITIALIZE VAR_LIST
    41         | /* empty */
 
    42 TYPE: type
@@ -251,7 +251,7 @@ DECL (77)
 VAR_LIST (78)
     on left: 40 41, on right: 39 40
 TYPE (79)
-    on left: 42 43, on right: 39
+    on left: 42 43, on right: 39 40
 INITIALIZE (80)
     on left: 44 45, on right: 39 40
 CONST (81)
@@ -687,18 +687,26 @@ state 39
 
 state 40
 
-   40 VAR_LIST: COMMA . IDENTIFIER INITIALIZE VAR_LIST
+   40 VAR_LIST: COMMA . TYPE IDENTIFIER INITIALIZE VAR_LIST
 
-    IDENTIFIER  shift, and go to state 67
+    SIGNED    shift, and go to state 1
+    UNSIGNED  shift, and go to state 2
+
+    IDENTIFIER  reduce using rule 43 (TYPE)
+    $default    reduce using rule 67 (sign)
+
+    TYPE  go to state 67
+    type  go to state 68
+    sign  go to state 11
 
 
 state 41
 
    39 DECL: TYPE IDENTIFIER INITIALIZE VAR_LIST . sc
 
-    DELIMITER  shift, and go to state 68
+    DELIMITER  shift, and go to state 69
 
-    sc  go to state 69
+    sc  go to state 70
 
 
 state 42
@@ -706,7 +714,7 @@ state 42
     6 FUN_DECL: type IDENTIFIER OPEN_PAR ARG . CLOSE_PAR sc
     8 FUNC: type IDENTIFIER OPEN_PAR ARG . CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
 
-    CLOSE_PAR  shift, and go to state 70
+    CLOSE_PAR  shift, and go to state 71
 
 
 state 43
@@ -721,21 +729,21 @@ state 44
     7 FUN_DECL: VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR . sc
     9 FUNC: VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR . OPEN_BRACES BODY CLOSE_BRACES
 
-    DELIMITER    shift, and go to state 68
-    OPEN_BRACES  shift, and go to state 71
+    DELIMITER    shift, and go to state 69
+    OPEN_BRACES  shift, and go to state 72
 
-    sc  go to state 72
+    sc  go to state 73
 
 
 state 45
 
    10 ARG: type IDENTIFIER . arg
 
-    COMMA  shift, and go to state 73
+    COMMA  shift, and go to state 74
 
     $default  reduce using rule 14 (arg)
 
-    arg  go to state 74
+    arg  go to state 75
 
 
 state 46
@@ -762,7 +770,7 @@ state 46
     NOT_EQ       shift, and go to state 52
     LS_THAN      shift, and go to state 53
     GR_THAN      shift, and go to state 54
-    CLOSE_PAR    shift, and go to state 75
+    CLOSE_PAR    shift, and go to state 76
     MINUS        shift, and go to state 55
     PLUS         shift, and go to state 56
     STAR         shift, and go to state 57
@@ -845,7 +853,7 @@ state 55
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 76
+    EXP    go to state 77
 
 
 state 56
@@ -859,7 +867,7 @@ state 56
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 77
+    EXP    go to state 78
 
 
 state 57
@@ -873,7 +881,7 @@ state 57
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 78
+    EXP    go to state 79
 
 
 state 58
@@ -887,7 +895,7 @@ state 58
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 79
+    EXP    go to state 80
 
 
 state 59
@@ -901,7 +909,7 @@ state 59
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 80
+    EXP    go to state 81
 
 
 state 60
@@ -915,7 +923,7 @@ state 60
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 81
+    EXP    go to state 82
 
 
 state 61
@@ -929,7 +937,7 @@ state 61
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 82
+    EXP    go to state 83
 
 
 state 62
@@ -943,7 +951,7 @@ state 62
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 83
+    EXP    go to state 84
 
 
 state 63
@@ -957,7 +965,7 @@ state 63
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 84
+    EXP    go to state 85
 
 
 state 64
@@ -971,7 +979,7 @@ state 64
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 85
+    EXP    go to state 86
 
 
 state 65
@@ -985,7 +993,7 @@ state 65
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 86
+    EXP    go to state 87
 
 
 state 66
@@ -999,61 +1007,64 @@ state 66
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 87
+    EXP    go to state 88
 
 
 state 67
 
-   40 VAR_LIST: COMMA IDENTIFIER . INITIALIZE VAR_LIST
+   40 VAR_LIST: COMMA TYPE . IDENTIFIER INITIALIZE VAR_LIST
 
-    ASSIGN  shift, and go to state 25
-
-    $default  reduce using rule 45 (INITIALIZE)
-
-    INITIALIZE  go to state 88
+    IDENTIFIER  shift, and go to state 89
 
 
 state 68
 
-   84 sc: DELIMITER . sc
-   85   | DELIMITER .
+   42 TYPE: type .
 
-    DELIMITER  shift, and go to state 68
-
-    $default  reduce using rule 85 (sc)
-
-    sc  go to state 89
+    $default  reduce using rule 42 (TYPE)
 
 
 state 69
+
+   84 sc: DELIMITER . sc
+   85   | DELIMITER .
+
+    DELIMITER  shift, and go to state 69
+
+    $default  reduce using rule 85 (sc)
+
+    sc  go to state 90
+
+
+state 70
 
    39 DECL: TYPE IDENTIFIER INITIALIZE VAR_LIST sc .
 
     $default  reduce using rule 39 (DECL)
 
 
-state 70
+state 71
 
     6 FUN_DECL: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR . sc
     8 FUNC: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR . OPEN_BRACES BODY CLOSE_BRACES
 
-    DELIMITER    shift, and go to state 68
-    OPEN_BRACES  shift, and go to state 90
+    DELIMITER    shift, and go to state 69
+    OPEN_BRACES  shift, and go to state 91
 
-    sc  go to state 91
+    sc  go to state 92
 
 
-state 71
+state 72
 
     9 FUNC: VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES . BODY CLOSE_BRACES
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -1063,29 +1074,29 @@ state 71
     CLOSE_BRACES  reduce using rule 16 (BODY)
     $default      reduce using rule 67 (sign)
 
-    BODY          go to state 97
-    stmt          go to state 98
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    BODY          go to state 98
+    stmt          go to state 99
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 72
+state 73
 
     7 FUN_DECL: VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR sc .
 
     $default  reduce using rule 7 (FUN_DECL)
 
 
-state 73
+state 74
 
    13 arg: COMMA . type IDENTIFIER arg
 
@@ -1098,21 +1109,21 @@ state 73
     sign  go to state 11
 
 
-state 74
+state 75
 
    10 ARG: type IDENTIFIER arg .
 
     $default  reduce using rule 10 (ARG)
 
 
-state 75
+state 76
 
    48 EXP: OPEN_PAR EXP CLOSE_PAR .
 
     $default  reduce using rule 48 (EXP)
 
 
-state 76
+state 77
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1143,7 +1154,7 @@ state 76
     LGOP  go to state 66
 
 
-state 77
+state 78
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1174,7 +1185,7 @@ state 77
     LGOP  go to state 66
 
 
-state 78
+state 79
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1202,7 +1213,7 @@ state 78
     LGOP  go to state 66
 
 
-state 79
+state 80
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1230,7 +1241,7 @@ state 79
     LGOP  go to state 66
 
 
-state 80
+state 81
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1258,7 +1269,7 @@ state 80
     LGOP  go to state 66
 
 
-state 81
+state 82
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1284,7 +1295,7 @@ state 81
     LGOP  go to state 66
 
 
-state 82
+state 83
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1310,7 +1321,7 @@ state 82
     LGOP  go to state 66
 
 
-state 83
+state 84
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1335,7 +1346,7 @@ state 83
     LGOP  go to state 66
 
 
-state 84
+state 85
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1357,7 +1368,7 @@ state 84
     LGOP  go to state 66
 
 
-state 85
+state 86
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1381,7 +1392,7 @@ state 85
     LGOP  go to state 66
 
 
-state 86
+state 87
 
    49 EXP: EXP . RLOP EXP
    49    | EXP RLOP EXP .
@@ -1440,7 +1451,7 @@ state 86
     LGOP  go to state 66
 
 
-state 87
+state 88
 
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
@@ -1499,35 +1510,35 @@ state 87
     LGOP  go to state 66
 
 
-state 88
-
-   40 VAR_LIST: COMMA IDENTIFIER INITIALIZE . VAR_LIST
-
-    COMMA  shift, and go to state 40
-
-    $default  reduce using rule 41 (VAR_LIST)
-
-    VAR_LIST  go to state 108
-
-
 state 89
+
+   40 VAR_LIST: COMMA TYPE IDENTIFIER . INITIALIZE VAR_LIST
+
+    ASSIGN  shift, and go to state 25
+
+    $default  reduce using rule 45 (INITIALIZE)
+
+    INITIALIZE  go to state 108
+
+
+state 90
 
    84 sc: DELIMITER sc .
 
     $default  reduce using rule 84 (sc)
 
 
-state 90
+state 91
 
     8 FUNC: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES . BODY CLOSE_BRACES
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -1538,42 +1549,42 @@ state 90
     $default      reduce using rule 67 (sign)
 
     BODY          go to state 109
-    stmt          go to state 98
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    stmt          go to state 99
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 91
+state 92
 
     6 FUN_DECL: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR sc .
 
     $default  reduce using rule 6 (FUN_DECL)
 
 
-state 92
+state 93
 
    32 forblock: FOR . OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
 
     OPEN_PAR  shift, and go to state 110
 
 
-state 93
+state 94
 
    31 whileblock: WHILE . OPEN_PAR EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
 
     OPEN_PAR  shift, and go to state 111
 
 
-state 94
+state 95
 
    29 ifblock: IF . OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
    30        | IF . OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
@@ -1581,17 +1592,17 @@ state 94
     OPEN_PAR  shift, and go to state 112
 
 
-state 95
+state 96
 
    36 return_stm: RETURN . EXP sc
    37           | RETURN . sc
    38           | RETURN . functioncall
 
-    IDENTIFIER    shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
-    DELIMITER     shift, and go to state 68
+    DELIMITER     shift, and go to state 69
     OPEN_PAR      shift, and go to state 37
 
     functioncall  go to state 113
@@ -1600,7 +1611,7 @@ state 95
     sc            go to state 115
 
 
-state 96
+state 97
 
    33 functioncall: IDENTIFIER . OPEN_PAR temp CLOSE_PAR
    52 EXP: IDENTIFIER .
@@ -1611,24 +1622,24 @@ state 96
     $default  reduce using rule 52 (EXP)
 
 
-state 97
+state 98
 
     9 FUNC: VOID IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES BODY . CLOSE_BRACES
 
     CLOSE_BRACES  shift, and go to state 117
 
 
-state 98
+state 99
 
    15 BODY: stmt . BODY
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -1639,63 +1650,63 @@ state 98
     $default      reduce using rule 67 (sign)
 
     BODY          go to state 118
-    stmt          go to state 98
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    stmt          go to state 99
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 99
+state 100
 
    23 stmt: ifblock .
 
     $default  reduce using rule 23 (stmt)
 
 
-state 100
+state 101
 
    25 stmt: whileblock .
 
     $default  reduce using rule 25 (stmt)
 
 
-state 101
+state 102
 
    24 stmt: forblock .
 
     $default  reduce using rule 24 (stmt)
 
 
-state 102
+state 103
 
    26 stmt: functioncall .
 
     $default  reduce using rule 26 (stmt)
 
 
-state 103
+state 104
 
    28 stmt: return_stm .
 
     $default  reduce using rule 28 (stmt)
 
 
-state 104
+state 105
 
    22 stmt: DECL .
 
     $default  reduce using rule 22 (stmt)
 
 
-state 105
+state 106
 
    27 stmt: EXP .
    49 EXP: EXP . RLOP EXP
@@ -1736,13 +1747,6 @@ state 105
     LGOP  go to state 66
 
 
-state 106
-
-   42 TYPE: type .
-
-    $default  reduce using rule 42 (TYPE)
-
-
 state 107
 
    13 arg: COMMA type . IDENTIFIER arg
@@ -1752,16 +1756,20 @@ state 107
 
 state 108
 
-   40 VAR_LIST: COMMA IDENTIFIER INITIALIZE VAR_LIST .
+   40 VAR_LIST: COMMA TYPE IDENTIFIER INITIALIZE . VAR_LIST
 
-    $default  reduce using rule 40 (VAR_LIST)
+    COMMA  shift, and go to state 40
+
+    $default  reduce using rule 41 (VAR_LIST)
+
+    VAR_LIST  go to state 120
 
 
 state 109
 
     8 FUNC: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES BODY . CLOSE_BRACES
 
-    CLOSE_BRACES  shift, and go to state 120
+    CLOSE_BRACES  shift, and go to state 121
 
 
 state 110
@@ -1775,7 +1783,7 @@ state 110
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 121
+    EXP    go to state 122
 
 
 state 111
@@ -1789,7 +1797,7 @@ state 111
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 122
+    EXP    go to state 123
 
 
 state 112
@@ -1804,7 +1812,7 @@ state 112
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 123
+    EXP    go to state 124
 
 
 state 113
@@ -1838,7 +1846,7 @@ state 114
     NOT_EQ       shift, and go to state 52
     LS_THAN      shift, and go to state 53
     GR_THAN      shift, and go to state 54
-    DELIMITER    shift, and go to state 68
+    DELIMITER    shift, and go to state 69
     MINUS        shift, and go to state 55
     PLUS         shift, and go to state 56
     STAR         shift, and go to state 57
@@ -1852,7 +1860,7 @@ state 114
 
     RLOP  go to state 65
     LGOP  go to state 66
-    sc    go to state 124
+    sc    go to state 125
 
 
 state 115
@@ -1872,9 +1880,9 @@ state 116
     STRING        shift, and go to state 36
     OPEN_PAR      shift, and go to state 37
 
-    temp   go to state 125
+    temp   go to state 126
     CONST  go to state 38
-    EXP    go to state 126
+    EXP    go to state 127
 
 
 state 117
@@ -1895,21 +1903,28 @@ state 119
 
    13 arg: COMMA type IDENTIFIER . arg
 
-    COMMA  shift, and go to state 73
+    COMMA  shift, and go to state 74
 
     $default  reduce using rule 14 (arg)
 
-    arg  go to state 127
+    arg  go to state 128
 
 
 state 120
+
+   40 VAR_LIST: COMMA TYPE IDENTIFIER INITIALIZE VAR_LIST .
+
+    $default  reduce using rule 40 (VAR_LIST)
+
+
+state 121
 
     8 FUNC: type IDENTIFIER OPEN_PAR ARG CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES .
 
     $default  reduce using rule 8 (FUNC)
 
 
-state 121
+state 122
 
    32 forblock: FOR OPEN_PAR EXP . DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
    49 EXP: EXP . RLOP EXP
@@ -1933,47 +1948,7 @@ state 121
     NOT_EQ       shift, and go to state 52
     LS_THAN      shift, and go to state 53
     GR_THAN      shift, and go to state 54
-    DELIMITER    shift, and go to state 128
-    MINUS        shift, and go to state 55
-    PLUS         shift, and go to state 56
-    STAR         shift, and go to state 57
-    FW_SLASH     shift, and go to state 58
-    MODULO       shift, and go to state 59
-    LS_SHIFT     shift, and go to state 60
-    RS_SHIFT     shift, and go to state 61
-    BITWISE_AND  shift, and go to state 62
-    BITWISE_OR   shift, and go to state 63
-    BITWISE_XOR  shift, and go to state 64
-
-    RLOP  go to state 65
-    LGOP  go to state 66
-
-
-state 122
-
-   31 whileblock: WHILE OPEN_PAR EXP . CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
-   49 EXP: EXP . RLOP EXP
-   50    | EXP . LGOP EXP
-   54    | EXP . PLUS EXP
-   55    | EXP . MINUS EXP
-   56    | EXP . STAR EXP
-   57    | EXP . FW_SLASH EXP
-   58    | EXP . MODULO EXP
-   59    | EXP . LS_SHIFT EXP
-   60    | EXP . RS_SHIFT EXP
-   61    | EXP . BITWISE_AND EXP
-   62    | EXP . BITWISE_XOR EXP
-   63    | EXP . BITWISE_OR EXP
-
-    LOGICAL_AND  shift, and go to state 47
-    LOGICAL_OR   shift, and go to state 48
-    LS_THAN_EQ   shift, and go to state 49
-    GR_THAN_EQ   shift, and go to state 50
-    EQ           shift, and go to state 51
-    NOT_EQ       shift, and go to state 52
-    LS_THAN      shift, and go to state 53
-    GR_THAN      shift, and go to state 54
-    CLOSE_PAR    shift, and go to state 129
+    DELIMITER    shift, and go to state 129
     MINUS        shift, and go to state 55
     PLUS         shift, and go to state 56
     STAR         shift, and go to state 57
@@ -1991,8 +1966,7 @@ state 122
 
 state 123
 
-   29 ifblock: IF OPEN_PAR EXP . CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
-   30        | IF OPEN_PAR EXP . CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
+   31 whileblock: WHILE OPEN_PAR EXP . CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
    49 EXP: EXP . RLOP EXP
    50    | EXP . LGOP EXP
    54    | EXP . PLUS EXP
@@ -2032,21 +2006,62 @@ state 123
 
 state 124
 
+   29 ifblock: IF OPEN_PAR EXP . CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
+   30        | IF OPEN_PAR EXP . CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES
+   49 EXP: EXP . RLOP EXP
+   50    | EXP . LGOP EXP
+   54    | EXP . PLUS EXP
+   55    | EXP . MINUS EXP
+   56    | EXP . STAR EXP
+   57    | EXP . FW_SLASH EXP
+   58    | EXP . MODULO EXP
+   59    | EXP . LS_SHIFT EXP
+   60    | EXP . RS_SHIFT EXP
+   61    | EXP . BITWISE_AND EXP
+   62    | EXP . BITWISE_XOR EXP
+   63    | EXP . BITWISE_OR EXP
+
+    LOGICAL_AND  shift, and go to state 47
+    LOGICAL_OR   shift, and go to state 48
+    LS_THAN_EQ   shift, and go to state 49
+    GR_THAN_EQ   shift, and go to state 50
+    EQ           shift, and go to state 51
+    NOT_EQ       shift, and go to state 52
+    LS_THAN      shift, and go to state 53
+    GR_THAN      shift, and go to state 54
+    CLOSE_PAR    shift, and go to state 131
+    MINUS        shift, and go to state 55
+    PLUS         shift, and go to state 56
+    STAR         shift, and go to state 57
+    FW_SLASH     shift, and go to state 58
+    MODULO       shift, and go to state 59
+    LS_SHIFT     shift, and go to state 60
+    RS_SHIFT     shift, and go to state 61
+    BITWISE_AND  shift, and go to state 62
+    BITWISE_OR   shift, and go to state 63
+    BITWISE_XOR  shift, and go to state 64
+
+    RLOP  go to state 65
+    LGOP  go to state 66
+
+
+state 125
+
    36 return_stm: RETURN EXP sc .
 
     $default  reduce using rule 36 (return_stm)
 
 
-state 125
+state 126
 
    33 functioncall: IDENTIFIER OPEN_PAR temp . CLOSE_PAR
    35 temp: temp . COMMA EXP
 
-    COMMA      shift, and go to state 131
-    CLOSE_PAR  shift, and go to state 132
+    COMMA      shift, and go to state 132
+    CLOSE_PAR  shift, and go to state 133
 
 
-state 126
+state 127
 
    34 temp: EXP .
    49 EXP: EXP . RLOP EXP
@@ -2087,14 +2102,14 @@ state 126
     LGOP  go to state 66
 
 
-state 127
+state 128
 
    13 arg: COMMA type IDENTIFIER arg .
 
     $default  reduce using rule 13 (arg)
 
 
-state 128
+state 129
 
    32 forblock: FOR OPEN_PAR EXP DELIMITER . EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
 
@@ -2105,25 +2120,25 @@ state 128
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 133
-
-
-state 129
-
-   31 whileblock: WHILE OPEN_PAR EXP CLOSE_PAR . OPEN_BRACES LOOPBODY CLOSE_BRACES
-
-    OPEN_BRACES  shift, and go to state 134
+    EXP    go to state 134
 
 
 state 130
 
-   29 ifblock: IF OPEN_PAR EXP CLOSE_PAR . OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
-   30        | IF OPEN_PAR EXP CLOSE_PAR . OPEN_BRACES BODY CLOSE_BRACES
+   31 whileblock: WHILE OPEN_PAR EXP CLOSE_PAR . OPEN_BRACES LOOPBODY CLOSE_BRACES
 
     OPEN_BRACES  shift, and go to state 135
 
 
 state 131
+
+   29 ifblock: IF OPEN_PAR EXP CLOSE_PAR . OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
+   30        | IF OPEN_PAR EXP CLOSE_PAR . OPEN_BRACES BODY CLOSE_BRACES
+
+    OPEN_BRACES  shift, and go to state 136
+
+
+state 132
 
    35 temp: temp COMMA . EXP
 
@@ -2134,17 +2149,17 @@ state 131
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 136
+    EXP    go to state 137
 
 
-state 132
+state 133
 
    33 functioncall: IDENTIFIER OPEN_PAR temp CLOSE_PAR .
 
     $default  reduce using rule 33 (functioncall)
 
 
-state 133
+state 134
 
    32 forblock: FOR OPEN_PAR EXP DELIMITER EXP . DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
    49 EXP: EXP . RLOP EXP
@@ -2168,7 +2183,7 @@ state 133
     NOT_EQ       shift, and go to state 52
     LS_THAN      shift, and go to state 53
     GR_THAN      shift, and go to state 54
-    DELIMITER    shift, and go to state 137
+    DELIMITER    shift, and go to state 138
     MINUS        shift, and go to state 55
     PLUS         shift, and go to state 56
     STAR         shift, and go to state 57
@@ -2184,19 +2199,19 @@ state 133
     LGOP  go to state 66
 
 
-state 134
+state 135
 
    31 whileblock: WHILE OPEN_PAR EXP CLOSE_PAR OPEN_BRACES . LOOPBODY CLOSE_BRACES
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    BREAK         shift, and go to state 138
-    CONTINUE      shift, and go to state 139
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    BREAK         shift, and go to state 139
+    CONTINUE      shift, and go to state 140
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -2206,34 +2221,34 @@ state 134
     CLOSE_BRACES  reduce using rule 18 (LOOPBODY)
     $default      reduce using rule 67 (sign)
 
-    LOOPBODY      go to state 140
-    X             go to state 141
-    stmt          go to state 142
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    LOOPBODY      go to state 141
+    X             go to state 142
+    stmt          go to state 143
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 135
+state 136
 
    29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES . BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
    30        | IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES . BODY CLOSE_BRACES
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -2243,22 +2258,22 @@ state 135
     CLOSE_BRACES  reduce using rule 16 (BODY)
     $default      reduce using rule 67 (sign)
 
-    BODY          go to state 143
-    stmt          go to state 98
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    BODY          go to state 144
+    stmt          go to state 99
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 136
+state 137
 
    35 temp: temp COMMA EXP .
    49 EXP: EXP . RLOP EXP
@@ -2299,7 +2314,7 @@ state 136
     LGOP  go to state 66
 
 
-state 137
+state 138
 
    32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER . EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
 
@@ -2310,47 +2325,47 @@ state 137
     OPEN_PAR      shift, and go to state 37
 
     CONST  go to state 38
-    EXP    go to state 144
-
-
-state 138
-
-   20 X: BREAK . sc
-
-    DELIMITER  shift, and go to state 68
-
-    sc  go to state 145
+    EXP    go to state 145
 
 
 state 139
 
-   21 X: CONTINUE . sc
+   20 X: BREAK . sc
 
-    DELIMITER  shift, and go to state 68
+    DELIMITER  shift, and go to state 69
 
     sc  go to state 146
 
 
 state 140
 
-   31 whileblock: WHILE OPEN_PAR EXP CLOSE_PAR OPEN_BRACES LOOPBODY . CLOSE_BRACES
+   21 X: CONTINUE . sc
 
-    CLOSE_BRACES  shift, and go to state 147
+    DELIMITER  shift, and go to state 69
+
+    sc  go to state 147
 
 
 state 141
+
+   31 whileblock: WHILE OPEN_PAR EXP CLOSE_PAR OPEN_BRACES LOOPBODY . CLOSE_BRACES
+
+    CLOSE_BRACES  shift, and go to state 148
+
+
+state 142
 
    17 LOOPBODY: X . LOOPBODY
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    BREAK         shift, and go to state 138
-    CONTINUE      shift, and go to state 139
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    BREAK         shift, and go to state 139
+    CONTINUE      shift, and go to state 140
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -2360,38 +2375,38 @@ state 141
     CLOSE_BRACES  reduce using rule 18 (LOOPBODY)
     $default      reduce using rule 67 (sign)
 
-    LOOPBODY      go to state 148
-    X             go to state 141
-    stmt          go to state 142
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    LOOPBODY      go to state 149
+    X             go to state 142
+    stmt          go to state 143
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 142
+state 143
 
    19 X: stmt .
 
     $default  reduce using rule 19 (X)
 
 
-state 143
+state 144
 
    29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY . CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES
    30        | IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY . CLOSE_BRACES
 
-    CLOSE_BRACES  shift, and go to state 149
+    CLOSE_BRACES  shift, and go to state 150
 
 
-state 144
+state 145
 
    32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP . CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES
    49 EXP: EXP . RLOP EXP
@@ -2415,7 +2430,7 @@ state 144
     NOT_EQ       shift, and go to state 52
     LS_THAN      shift, and go to state 53
     GR_THAN      shift, and go to state 54
-    CLOSE_PAR    shift, and go to state 150
+    CLOSE_PAR    shift, and go to state 151
     MINUS        shift, and go to state 55
     PLUS         shift, and go to state 56
     STAR         shift, and go to state 57
@@ -2431,71 +2446,71 @@ state 144
     LGOP  go to state 66
 
 
-state 145
+state 146
 
    20 X: BREAK sc .
 
     $default  reduce using rule 20 (X)
 
 
-state 146
+state 147
 
    21 X: CONTINUE sc .
 
     $default  reduce using rule 21 (X)
 
 
-state 147
+state 148
 
    31 whileblock: WHILE OPEN_PAR EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES .
 
     $default  reduce using rule 31 (whileblock)
 
 
-state 148
+state 149
 
    17 LOOPBODY: X LOOPBODY .
 
     $default  reduce using rule 17 (LOOPBODY)
 
 
-state 149
+state 150
 
    29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES . ELSE OPEN_BRACES BODY CLOSE_BRACES
    30        | IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES .
 
-    ELSE  shift, and go to state 151
+    ELSE  shift, and go to state 152
 
     $default  reduce using rule 30 (ifblock)
 
 
-state 150
-
-   32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR . OPEN_BRACES LOOPBODY CLOSE_BRACES
-
-    OPEN_BRACES  shift, and go to state 152
-
-
 state 151
 
-   29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE . OPEN_BRACES BODY CLOSE_BRACES
+   32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR . OPEN_BRACES LOOPBODY CLOSE_BRACES
 
     OPEN_BRACES  shift, and go to state 153
 
 
 state 152
 
+   29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE . OPEN_BRACES BODY CLOSE_BRACES
+
+    OPEN_BRACES  shift, and go to state 154
+
+
+state 153
+
    32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES . LOOPBODY CLOSE_BRACES
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    BREAK         shift, and go to state 138
-    CONTINUE      shift, and go to state 139
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    BREAK         shift, and go to state 139
+    CONTINUE      shift, and go to state 140
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -2505,33 +2520,33 @@ state 152
     CLOSE_BRACES  reduce using rule 18 (LOOPBODY)
     $default      reduce using rule 67 (sign)
 
-    LOOPBODY      go to state 154
-    X             go to state 141
-    stmt          go to state 142
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    LOOPBODY      go to state 155
+    X             go to state 142
+    stmt          go to state 143
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
 
 
-state 153
+state 154
 
    29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES . BODY CLOSE_BRACES
 
     SIGNED        shift, and go to state 1
     UNSIGNED      shift, and go to state 2
-    FOR           shift, and go to state 92
-    WHILE         shift, and go to state 93
-    IF            shift, and go to state 94
-    RETURN        shift, and go to state 95
-    IDENTIFIER    shift, and go to state 96
+    FOR           shift, and go to state 93
+    WHILE         shift, and go to state 94
+    IF            shift, and go to state 95
+    RETURN        shift, and go to state 96
+    IDENTIFIER    shift, and go to state 97
     HEX_CONSTANT  shift, and go to state 34
     DEC_CONSTANT  shift, and go to state 35
     STRING        shift, and go to state 36
@@ -2541,43 +2556,43 @@ state 153
     CLOSE_BRACES  reduce using rule 16 (BODY)
     $default      reduce using rule 67 (sign)
 
-    BODY          go to state 155
-    stmt          go to state 98
-    ifblock       go to state 99
-    whileblock    go to state 100
-    forblock      go to state 101
-    functioncall  go to state 102
-    return_stm    go to state 103
-    DECL          go to state 104
+    BODY          go to state 156
+    stmt          go to state 99
+    ifblock       go to state 100
+    whileblock    go to state 101
+    forblock      go to state 102
+    functioncall  go to state 103
+    return_stm    go to state 104
+    DECL          go to state 105
     TYPE          go to state 9
     CONST         go to state 38
-    EXP           go to state 105
-    type          go to state 106
+    EXP           go to state 106
+    type          go to state 68
     sign          go to state 11
-
-
-state 154
-
-   32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY . CLOSE_BRACES
-
-    CLOSE_BRACES  shift, and go to state 156
 
 
 state 155
 
-   29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY . CLOSE_BRACES
+   32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY . CLOSE_BRACES
 
     CLOSE_BRACES  shift, and go to state 157
 
 
 state 156
 
+   29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY . CLOSE_BRACES
+
+    CLOSE_BRACES  shift, and go to state 158
+
+
+state 157
+
    32 forblock: FOR OPEN_PAR EXP DELIMITER EXP DELIMITER EXP CLOSE_PAR OPEN_BRACES LOOPBODY CLOSE_BRACES .
 
     $default  reduce using rule 32 (forblock)
 
 
-state 157
+state 158
 
    29 ifblock: IF OPEN_PAR EXP CLOSE_PAR OPEN_BRACES BODY CLOSE_BRACES ELSE OPEN_BRACES BODY CLOSE_BRACES .
 

@@ -11,7 +11,7 @@ int a=3,b;
 int main(void)
 //logic
 {
-int a = "hello" + 6;
+int a = "kabv" + 6;
 	if(3);;;;;
 //congrats!! code succeeded
 int i =9;
